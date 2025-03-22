@@ -1,6 +1,6 @@
 # M3L: Multi-Modal Matrix Learning
 
-M3L is a Python implementation of a novel approach for learning projection matrices from multi-modal embeddings. The algorithm learns optimal projection weights to capture the most important dimensions across similar embeddings while respecting both intra-embedding and inter-subject relationships.
+M3L is a Python implementation of the Multi-feature Multi-Manifold Learning (M3L) algorithm for multi-modal data analysis. This implementation is based on the paper by Yan et al. for single-sample face recognition.
 
 ## Overview
 
@@ -100,21 +100,13 @@ The algorithm consists of the following key components:
 - `lr_w`: Learning rate for W updates
 - `lr_a`: Learning rate for a updates
 
+## Citation
+
+This implementation is based on the following paper:
+
+Yan, H., Lu, J., Zhou, X., & Shang, Y. (2014). Multi-feature multi-manifold learning for single-sample face recognition. Neurocomputing, 143, 134-143.
+https://doi.org/10.1016/j.neucom.2014.06.012
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Citation
-
-If you use this code in your research, please cite:
-
-```
-@misc{M3L2023,
-  author = {Your Name},
-  title = {M3L: Multi-Modal Matrix Learning},
-  year = {2023},
-  publisher = {GitHub},
-  journal = {GitHub Repository},
-  howpublished = {\url{https://github.com/yourusername/M3L}}
-}
-```
