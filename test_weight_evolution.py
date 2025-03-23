@@ -34,8 +34,28 @@ print(f"Using learning rate: {lr_b}")
 # Compute subject similarity matrix G
 G = compute_subject_G(embeddings, t_G, sigma)
 
-# Initialize weights uniformly
-b = np.ones((N, Z)) / Z
+# Initialize weights with different starting points for each subject
+# Instead of uniform weights, we'll bias them differently for each subject
+b = np.zeros((N, Z))
+
+# Subject 0: Higher weight to embedding 0
+b[0] = np.array([0.4, 0.3, 0.2, 0.1])
+
+# Subject 1: Higher weight to embedding 1
+b[1] = np.array([0.2, 0.5, 0.2, 0.1])
+
+# Subject 2: Higher weight to embedding 2
+b[2] = np.array([0.1, 0.2, 0.5, 0.2])
+
+# Subject 3: Higher weight to embedding 3
+b[3] = np.array([0.1, 0.2, 0.2, 0.5])
+
+# Subject 4: Relatively balanced weights
+b[4] = np.array([0.3, 0.3, 0.2, 0.2])
+
+print("\nStarting weights for each subject:")
+for n in range(N):
+    print(f"Subject {n}: {b[n].round(3)}")
 
 # Track weight evolution for each subject
 weight_history = np.zeros((T+1, N, Z))
@@ -97,19 +117,23 @@ plt.legend()
 plt.grid(True)
 
 plt.tight_layout()
-plt.savefig('weight_evolution.png')
+plt.savefig('weight_evolution_different_start.png')
 
-print("\nWeight evolution plot saved as 'weight_evolution.png'")
+print("\nWeight evolution plot saved as 'weight_evolution_different_start.png'")
 
 # Save results to a txt file
-with open('weight_evolution_results.txt', 'w') as f:
-    f.write("Weight Evolution with Slow Learning Rate\n")
+with open('weight_evolution_different_start.txt', 'w') as f:
+    f.write("Weight Evolution with Different Starting Points\n")
     f.write(f"Learning rate: {lr_b}\n")
     f.write(f"Iterations: {T}\n")
     f.write(f"Embedding means: {means}\n")
     f.write(f"Embedding standard deviations: {stds}\n\n")
     
-    f.write("Weight progression (every 20 iterations):\n")
+    f.write("Starting weights for each subject:\n")
+    for n in range(N):
+        f.write(f"Subject {n}: {weight_history[0,n].round(3)}\n")
+    
+    f.write("\nWeight progression (every 20 iterations):\n")
     for t in range(0, T+1, 20):
         f.write(f"\nIteration {t}:\n")
         avg_weights = np.mean(weight_history[t], axis=0)
@@ -122,4 +146,4 @@ with open('weight_evolution_results.txt', 'w') as f:
     for n in range(N):
         f.write(f"Subject {n}: [{b[n,0]:.4f}, {b[n,1]:.4f}, {b[n,2]:.4f}, {b[n,3]:.4f}]\n")
 
-print("Detailed results saved to 'weight_evolution_results.txt'") 
+print("Detailed results saved to 'weight_evolution_different_start.txt'") 
